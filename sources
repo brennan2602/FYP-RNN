@@ -1,0 +1,17 @@
+This project uses source code for the RNN from:
+
+Google. c2019. Text generation with an RNN. [Online]. [4 January 2020].
+Available from: https://www.tensorflow.org/tutorials/text/text_generation
+
+Most of this code is reused with the primary difference being it is split across the rnnTrain and rnnGenerate classes
+
+This project uses source code for MIDI to piano roll conversion, and piano roll to MIDI from:
+Colin raffel. c2020. Pretty MIDI repository. [Online]. [4 January 2020].
+Available from: https://github.com/craffel/pretty-midi
+
+The get_piano_roll() and piano_roll_to_pretty_midi() are the extent of the usage of this source code,
+the remainder of the code in the encode and decode files were developed  by me.
+
+Paper discussing Pretty Midi:
+Colin Raffel and Daniel P. W. Ellis. Intuitive Analysis, Creation and Manipulation of MIDI Data with pretty_midi.
+In Proceedings of the 15th International Conference on Music Information Retrieval Late Breaking and Demo Papers, 2014.

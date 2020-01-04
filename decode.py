@@ -78,6 +78,7 @@ def decode(test):
 					elif note.count("#")>0 or note.count('.')>1:
 						note=0
 						velocity = 0
+					note=float(note)
 
 					if int(note)>126:
 						note =0
@@ -93,29 +94,17 @@ def decode(test):
 		timeindex=timeindex+1
 	#arr=arr.T
 	return arr
-# currentDirectory = os.getcwd()
-# print(currentDirectory)
-# myfile=currentDirectory+"\\generated.txt"
 
-# with open("generated.txt", 'r') as file:
-#     outString = file.read()
 
 with open('generated.txt') as f:
-    lines = f.readlines()
-
-# def isLineEmpty(line):
-#     return len(line.strip()) == 0
+	lines = f.readlines()
 outString=""
 for l in lines:
 	if len(l.strip()) != 0:
 		outString=outString+l
 
 print(outString)
-# test = r"C:\Users\brenn\Documents\scripts\FYProughwork\verify3.txt"
-# with open(test, 'r') as file:
-#     testString = file.read()
-# decoded=decode(testString)
 decoded=decode(outString)
 fs=20
 pm = piano_roll_to_pretty_midi(decoded, fs=fs, program=2)
-pm.write("piano5epo.midi")
+pm.write("piano.midi")

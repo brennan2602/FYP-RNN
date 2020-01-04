@@ -33,12 +33,10 @@ for f in files[0:5]:
     x= f.split("\\")[-1]
     print(x)
     fileName=f+"\\"+x
-    # with open(fileName) as file:
-    #     content = file.read()
     pr = get_piano_roll(fileName)
     arr = pr.T
     outString= encode(arr)
-    file1 = open("data.txt","a")
+    file1 = open("encodedData.txt","a")
     file1.write(outString)
 
 file1.close()
