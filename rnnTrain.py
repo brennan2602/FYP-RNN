@@ -4,8 +4,9 @@ import tensorflow as tf
 
 import numpy as np
 import os
-#path_to_file = r"C:\Users\brenn\Documents\scripts\FYProughwork\verify3.txt"
-path_to_file = "encodedData.txt"
+#most code taken from TensorFlow tutorial but repurposed for music generation
+
+path_to_file = "encodedData.txt" #encoded training data
 text = open(path_to_file, 'rb').read().decode(encoding='utf-8')
 vocab = sorted(set(text))
 # Creating a mapping from unique characters to indices
@@ -87,6 +88,7 @@ model.load_weights(tf.train.latest_checkpoint(checkpoint_dir))
 model.build(tf.TensorShape([1, None]))
 model.summary()
 
+#plotting learning curve
 plt.plot(history.history["loss"])
 plt.title("model loss")
 plt.ylabel("loss")

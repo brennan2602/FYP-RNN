@@ -1,9 +1,9 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 import tensorflow as tf
 import numpy as np
+#most of the code taken from TensorFlow tutorial and repurposed for music generation
 
-
-path_to_file = "encodedData.txt"
+path_to_file = "encodedData.txt" #reference to file that network was trained on
 text = open(path_to_file, 'rb').read().decode(encoding='utf-8')
 vocab = sorted(set(text))
 # Creating a mapping from unique characters to indices
@@ -16,6 +16,7 @@ embedding_dim = 256
 # Number of RNN units
 rnn_units = 1024
 
+#definition of function to build model weights will be loaded in later
 def build_model(vocab_size, embedding_dim, rnn_units, batch_size):
   model = tf.keras.Sequential([
     tf.keras.layers.Embedding(vocab_size, embedding_dim,
@@ -29,10 +30,10 @@ def build_model(vocab_size, embedding_dim, rnn_units, batch_size):
   return model
 
 
-tf.train.latest_checkpoint(checkpoint_dir)
-print(tf.train.latest_checkpoint(checkpoint_dir))
-model = build_model(vocab_size, embedding_dim, rnn_units, batch_size=1)
-model.load_weights(tf.train.latest_checkpoint(checkpoint_dir))
+tf.train.latest_checkpoint(checkpoint_dir) #getting checkpoint
+print(tf.train.latest_checkpoint(checkpoint_dir)) #showing user which checkpoint is being used
+model = build_model(vocab_size, embedding_dim, rnn_units, batch_size=1) #building model without weights
+model.load_weights(tf.train.latest_checkpoint(checkpoint_dir)) #loading weights
 model.build(tf.TensorShape([1, None]))
 model.summary()
 
@@ -41,7 +42,7 @@ def generate_text(model, start_string):
   # Evaluation step (generating text using the learned model)
 
   # Number of characters to generate
-  num_generate = 5000
+  num_generate = 500000
 
   # Converting our start string to numbers (vectorizing)
   input_eval = [char2idx[s] for s in start_string]
@@ -53,7 +54,7 @@ def generate_text(model, start_string):
   # Low temperatures results in more predictable text.
   # Higher temperatures results in more surprising text.
   # Experiment to find the best setting.
-  #temperature = 0.9#1.0
+
 
   temperature = 1.0
   #temperature = 1.1
@@ -81,17 +82,20 @@ def generate_text(model, start_string):
 
   return (start_string + ''.join(text_generated))
 
-generated= generate_text(model, start_string=u"(57,58.0)")
+generated= generate_text(model, start_string=u"(57,58.0)") #generation method passed model and seed string
 print(generated)
-file1 = open("generated.txt","a")
+file1 = open("generated.txt","a") #writing to a text file to be decoded and converted to MIDI
 file1.write(generated)
 file1.close()
 
-with open("generated.txt", 'r') as file:
-    outString = file.read()
+# below is old code used to test issue where output didn't sound as expected
+# issue was blank lines in generated text file
 
-if outString.strip()== generated:
-    print("true")
-else:
-    print("false")
-    print(generated)
+# with open("generated.txt", 'r') as file:
+#     outString = file.read()
+#
+# if outString.strip()== generated:
+#     print("true")
+# else:
+#     print("false")
+#     print(generated)
